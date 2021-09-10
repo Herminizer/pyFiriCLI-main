@@ -12,3 +12,8 @@ def orderbookArt(ticker):
     print("--------------------------------")
     print("|      Orderbook:", ticker, "      |")
     print("--------------------------------")
+
+def ordersArt():
+    print("--------------------------------")
+    print("|         Open orders          |")
+    print("--------------------------------")

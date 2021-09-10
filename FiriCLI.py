@@ -1,11 +1,11 @@
-from miraiex import pyMiraiEx
+from firi import pyfiri
 import inquirer
 import pandas as pd
 import os
 import time
 from core import aesthetics as art
 
-miraiex = pyMiraiEx()
+firi = pyfiri()
 
 
 def main():
@@ -29,7 +29,7 @@ def main():
     elif menu_select == "Open orders":
         open_orders()
         deposit = ""
-        print(miraiex.trade.orderList(deposit))
+        print(firi.trade.orderList(deposit))
     elif menu_select == "Cancel orders":
         cancel_menu()
     elif menu_select == "Trading History":
@@ -80,7 +80,7 @@ def buy_menu():
         limit = input("Set price to buy at: ").lower()
         buy_amount = input("Set the amount to buy: ").lower()
         clear_screen()
-        print(miraiex.trade.createOrder(type='Bid', amount=buy_amount, price=limit, market=menu_select))
+        print(firi.trade.createOrder(type='Bid', amount=buy_amount, price=limit, market=menu_select))
         print("You have successfully bought ", buy_amount, " ", "for", limit, "NOK")
         wait()
     
@@ -109,7 +109,7 @@ def sell_menu():
         limit_int = float(limit)
         amount_int = float(sell_amount)
         print("Creating order...", "\nAsking price is", limit.lower(), "\nAmount: ", sell_amount.lower(), menu_select[0:3], "\nTotal", limit_int*amount_int, "NOK")
-        print(miraiex.trade.createOrder(type='Ask', amount=sell_amount, price=limit, market=menu_select))
+        print(firi.trade.createOrder(type='Ask', amount=sell_amount, price=limit, market=menu_select))
         
         wait()
     
@@ -130,7 +130,7 @@ def open_orders():
         main()
     else:
         clear_screen()
-        open_orders = miraiex.trade.orderList(menu_select)
+        open_orders = firi.trade.orderList(menu_select)
         if open_orders == []:
             print("No open orders. \n\nReturning to menu...")
             time.sleep(2)
@@ -159,7 +159,7 @@ def trading_history():
     if menu_select == "Return":
         main()
     else:
-        depth = miraiex.market.history(menu_select)
+        depth = firi.market.history(menu_select)
         df = pd.DataFrame(depth, columns=['type', 'amount', 'price', 'created_at', 'total'])
         df.sort_values(by='created_at')
 
@@ -182,15 +182,15 @@ def cancel_menu():
     if menu_select == "Return":
         main()
     elif menu_select == "Cancel all":
-        print(miraiex.trade.cancelOrder(market="BTCNOK"))
-        print(miraiex.trade.cancelOrder(market="ETHNOK"))
-        print(miraiex.trade.cancelOrder(market="LTCNOK"))
-        print(miraiex.trade.cancelOrder(market="XRPNOK"))
-        print(miraiex.trade.cancelOrder(market="ADANOK"))
-        print(miraiex.trade.cancelOrder(market="DAINOK"))
+        print(firi.trade.cancelOrder(market="BTCNOK"))
+        print(firi.trade.cancelOrder(market="ETHNOK"))
+        print(firi.trade.cancelOrder(market="LTCNOK"))
+        print(firi.trade.cancelOrder(market="XRPNOK"))
+        print(firi.trade.cancelOrder(market="ADANOK"))
+        print(firi.trade.cancelOrder(market="DAINOK"))
         print("All open orders have been cancelled.")
     else:
-        print(miraiex.trade.cancelOrder(market=menu_select))
+        print(firi.trade.cancelOrder(market=menu_select))
         print("Open orders in market", menu_select, "have been successfully deleted")
 
     wait()
@@ -213,7 +213,7 @@ def select_orderbook():
         while True:
             clear_screen()
             art.orderbookArt(ticker=ob_choice)
-            depth = miraiex.market.depth(ob_choice)
+            depth = firi.market.depth(ob_choice)
             df = pd.DataFrame(depth['asks'], columns=['price', 'amount'])
             print("Asks")
             print(df.head(10))
