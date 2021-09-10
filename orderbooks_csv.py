@@ -6,6 +6,10 @@ miraiex = pyMiraiEx()
 buy_orders = [list() for i in range(101)]
 sell_orders = [list() for i in range(101)]
 
+"""
+Functions for creating .csv-files from current orderbooks.
+"""
+
 def update_ltc():
     depth = miraiex.market.depth('BTCNOK')
     with open('orderbook_btcnok.csv', 'w') as fil:
