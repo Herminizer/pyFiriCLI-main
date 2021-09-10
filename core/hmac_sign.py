@@ -4,7 +4,7 @@ import hmac
 import hashlib 
 
 
-secret = b'd81fc006d75a5b755bb2e3a9c231869003b10fa75670b3a695c80e7b8b999378'
+secret = b'your secret key'
 epoch = {
     'timestamp': int(time.time()),
     'validity': 2000
