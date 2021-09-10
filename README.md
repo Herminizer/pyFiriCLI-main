@@ -4,7 +4,6 @@ Simple CLI for interacting with Firi API endpoints.
 To be used out of box, or to assist with retrieving data
 from the Firi trading API. 
 
-Requirements: Inquirer, Pandas
 
 1. pip install inquirer
    pip install pandas
@@ -12,6 +11,9 @@ Requirements: Inquirer, Pandas
 2. Update config.py with required API keys
 
 3. Run FiriCLI.py to start the CLI
+
+*Firi account verified using BankID is required for access to private endpoints.*
+*Contact support at support@miraiex.com for questions regarding API*
 
 
 

@@ -42,4 +42,3 @@ class Report:
         
         if self.logdefault == 1 or self.logdefault == 3:
             print(content)
-

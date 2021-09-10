@@ -5,7 +5,7 @@ from core import conf as Config
 from core import report as Report
 from core import reqparse as rp
 
-class pyMiraiEx:
+class pyfiri:
     def __init__(self):
         self.report = Report.Report()
 
@@ -26,5 +26,3 @@ class pyMiraiEx:
 
     def getTime(self):
         return rp.Parse(url='/time', type='get')
-
-
