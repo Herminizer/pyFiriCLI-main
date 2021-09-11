@@ -23,7 +23,7 @@ def main():
     menu_select = menu_prompt['menu']
 
     if menu_select == "Trade":
-        trade_menu()
+        buy_menu()
     elif menu_select == "Orderbooks":
         select_orderbook()
     elif menu_select == "Open orders":
@@ -49,9 +49,9 @@ def trade_menu():
                     choices=['Bid', 'Ask', 'Return'],
                 ),
     ]
-    menu_prompt = inquirer.prompt(questions)
+    menu_prompt1 = inquirer.prompt(questions)
 
-    buysell = menu_prompt['buysell']
+    buysell = menu_prompt1['buysell']
 
     if buysell == 'Bid':
         buy_menu()
@@ -63,15 +63,29 @@ def trade_menu():
 def buy_menu():
 
     clear_screen()
+    side = [
+    inquirer.List('side',
+                    message="Bid / Ask:",
+                    choices=['Bid', 'Ask', 'Return'],
+                ),
+    ]
+    menu_prompt1 = inquirer.prompt(side)
+
+    selection = menu_prompt1['side']
+
+    if selection == "Return":
+        main()
+
+    clear_screen()
     questions = [
     inquirer.List('trademenu',
                     message="Select a pair to buy: ",
                     choices=['BTCNOK', 'ETHNOK', 'LTCNOK','XRPNOK', 'ADANOK', 'DAINOK', 'Return'],
                 ),
     ]
-    menu_prompt = inquirer.prompt(questions)
+    menu_prompt2 = inquirer.prompt(questions)
 
-    menu_select = menu_prompt['trademenu']
+    menu_select = menu_prompt2['trademenu']
 
     if menu_select == "Return":
         main()
@@ -80,7 +94,7 @@ def buy_menu():
         limit = input("Set price to buy at: ").lower()
         buy_amount = input("Set the amount to buy: ").lower()
         clear_screen()
-        print(firi.trade.createOrder(type='Bid', amount=buy_amount, price=limit, market=menu_select))
+        print(firi.trade.createOrder(type=selection, amount=buy_amount, price=limit, market=menu_select))
         print("You have successfully bought ", buy_amount, " ", "for", limit, "NOK")
         wait()
     
@@ -210,19 +224,17 @@ def select_orderbook():
     if ob_choice == "Return":
         main()
     else:
-        while True:
-            clear_screen()
-            art.orderbookArt(ticker=ob_choice)
-            depth = firi.market.depth(ob_choice)
-            df = pd.DataFrame(depth['asks'], columns=['price', 'amount'])
-            print("Asks")
-            print(df.head(10))
+        art.orderbookArt(ticker=ob_choice)
+        depth = firi.market.depth(ob_choice)
+        df = pd.DataFrame(depth['asks'], columns=['price', 'amount'])
+        print("Asks")
+        print(df.head(10))
 
-            df = pd.DataFrame(depth['bids'], columns=['price', 'amount'])
-            df.sort_values(by='price')
-            print("Bids")
-            print(df.head(10))
-            time.sleep(5)
+        df = pd.DataFrame(depth['bids'], columns=['price', 'amount'])
+        df.sort_values(by='price')
+        print("Bids")
+        print(df.head(10))
+        time.sleep(5)
 
         
 def clear_screen():
