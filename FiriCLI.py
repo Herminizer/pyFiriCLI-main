@@ -23,7 +23,7 @@ def main():
     menu_select = menu_prompt['menu']
 
     if menu_select == "Trade":
-        buy_menu()
+        trade_menu()
     elif menu_select == "Orderbooks":
         select_orderbook()
     elif menu_select == "Open orders":
@@ -41,34 +41,15 @@ def main():
 
 
 def trade_menu():
-
     clear_screen()
-    questions = [
-    inquirer.List('buysell',
-                    message="Bid / Ask:",
-                    choices=['Bid', 'Ask', 'Return'],
-                ),
-    ]
-    menu_prompt1 = inquirer.prompt(questions)
 
-    buysell = menu_prompt1['buysell']
-
-    if buysell == 'Bid':
-        buy_menu()
-    elif buysell == 'Ask': 
-        sell_menu()
-    else:
-        main()
-
-def buy_menu():
-
-    clear_screen()
     side = [
     inquirer.List('side',
                     message="Bid / Ask:",
                     choices=['Bid', 'Ask', 'Return'],
                 ),
     ]
+
     menu_prompt1 = inquirer.prompt(side)
 
     selection = menu_prompt1['side']
@@ -86,45 +67,21 @@ def buy_menu():
     menu_prompt2 = inquirer.prompt(questions)
 
     menu_select = menu_prompt2['trademenu']
+    ticker = menu_select[0:3]
 
     if menu_select == "Return":
-        main()
+        trade_menu()
     else:
         clear_screen()
-        limit = input("Set price to buy at: ").lower()
-        buy_amount = input("Set the amount to buy: ").lower()
+        print("Enter", selection, "price:")
+        limit = input()
+        print("Enter", selection, "amount:")
+        buy_amount = input()
         clear_screen()
         print(firi.trade.createOrder(type=selection, amount=buy_amount, price=limit, market=menu_select))
-        print("You have successfully bought ", buy_amount, " ", "for", limit, "NOK")
-        wait()
-    
-
-
-def sell_menu():
-    clear_screen()
-
-    questions = [
-    inquirer.List('trademenu',
-                    message="Select a pair to sell: ",
-                    choices=['BTCNOK', 'ETHNOK', 'LTCNOK','XRPNOK', 'ADANOK', 'DAINOK', 'Return'],
-                ),
-    ]
-    menu_prompt = inquirer.prompt(questions)
-
-    menu_select = menu_prompt['trademenu']
-
-    head = menu_select[0:3]
-    if menu_select == "Return":
-        main()
-    else:
-        limit = input("Set price to sell at: ").lower()
-        sell_amount = input("Set the amount to sell: ").lower()
-        clear_screen()
         limit_int = float(limit)
-        amount_int = float(sell_amount)
-        print("Creating order...", "\nAsking price is", limit.lower(), "\nAmount: ", sell_amount.lower(), menu_select[0:3], "\nTotal", limit_int*amount_int, "NOK")
-        print(firi.trade.createOrder(type='Ask', amount=sell_amount, price=limit, market=menu_select))
-        
+        amount_int = float(buy_amount)
+        print(selection, "price:", limit, "NOK", "\nAmount:", buy_amount, ticker, "\nTotal:", limit_int*amount_int, "NOK")
         wait()
     
 
@@ -170,6 +127,7 @@ def trading_history():
     menu_prompt = inquirer.prompt(questions)
 
     menu_select = menu_prompt['trademenu']
+
     if menu_select == "Return":
         main()
     else:
@@ -183,16 +141,17 @@ def trading_history():
 
 def cancel_menu():
     clear_screen()
-
+    art.ordersArt()
     questions = [
-    inquirer.List('trademenu',
-                    message="Cancel orders in pair: ",
+    inquirer.List('cancel',
+                    message="Cancel all orders in pair: ",
                     choices=['BTCNOK', 'ETHNOK', 'LTCNOK','XRPNOK', 'ADANOK', 'DAINOK', 'Cancel all', 'Return'],
                 ),
     ]
     menu_prompt = inquirer.prompt(questions)
 
-    menu_select = menu_prompt['trademenu']
+    menu_select = menu_prompt['cancel']
+    
     if menu_select == "Return":
         main()
     elif menu_select == "Cancel all":

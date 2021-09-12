@@ -4,7 +4,6 @@
 import json
 import requests
 from core import conf as Config
-from core import report as rep
 from core import report as Report
 from core import hmac_sign as Sign
 
