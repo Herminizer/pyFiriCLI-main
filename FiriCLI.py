@@ -151,7 +151,7 @@ def cancel_menu():
     menu_prompt = inquirer.prompt(questions)
 
     menu_select = menu_prompt['cancel']
-    
+
     if menu_select == "Return":
         main()
     elif menu_select == "Cancel all":
