@@ -28,8 +28,6 @@ def main():
         select_orderbook()
     elif menu_select == "Open orders":
         open_orders()
-        deposit = ""
-        print(firi.trade.orderList(deposit))
     elif menu_select == "Cancel orders":
         cancel_menu()
     elif menu_select == "Trading History":
