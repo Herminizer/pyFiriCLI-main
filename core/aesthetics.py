@@ -16,9 +16,9 @@ def orderbookArt(ticker):
 def ordersArt():
     print("--------------------------------")
     print("|         Open orders          |")
-    print("--------------------------------")
+    print("--------------------------------\n")
 
-def ordersArt():
+def cancelArt():
     print("--------------------------------")
     print("|         Cancel orders        |")
     print("--------------------------------")

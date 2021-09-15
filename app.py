@@ -7,7 +7,6 @@ from core import aesthetics as art
 
 firi = pyfiri()
 
-
 def main():
     # Main menu, pointing to the different functions based on the users choice.
     clear_screen()
@@ -15,7 +14,7 @@ def main():
     questions = [
         inquirer.List('menu',
                         message="MENU ",
-                        choices=['Trade', 'Orderbooks','Open orders', 'Cancel orders', 'Trading History', 'Exit'],
+                        choices=['Trade', 'Orderbooks','Open orders', 'Cancel orders', 'Trading History', 'Deposit addresses', 'Account balance', 'Exit'],
                     ),
         ]
     menu_prompt = inquirer.prompt(questions)
@@ -32,6 +31,10 @@ def main():
         cancel_menu()
     elif menu_select == "Trading History":
         trading_history()
+    elif menu_select == "Deposit addresses":
+        get_addresses()
+    elif menu_select == "Account balance":
+        get_balance()
     elif menu_select == "Exit":
         exit()
     else:
@@ -105,6 +108,7 @@ def open_orders():
             time.sleep(2)
             main()
         else:
+            art.ordersArt()
             df = pd.DataFrame(open_orders, columns=['id', 'market', 'type', 'price', 'amount', 'remaining', 'matched', 'cancelled', 'created_at'])
             df.sort_values(by='created_at')
         
@@ -147,7 +151,6 @@ def cancel_menu():
                 ),
     ]
     menu_prompt = inquirer.prompt(questions)
-
     menu_select = menu_prompt['cancel']
 
     if menu_select == "Return":
@@ -191,7 +194,18 @@ def select_orderbook():
         df.sort_values(by='price')
         print("Bids")
         print(df.head(10))
-        time.sleep(5)
+        wait()
+
+def get_addresses():
+    address = firi.acc.addresses()
+    print(address)
+    wait()
+
+def get_balance():
+    balance = firi.acc.balances()
+    df = pd.DataFrame(balance, columns=['currency', 'balance', 'hold', 'available'])
+    print(df)
+    wait()
 
         
 def clear_screen():
@@ -210,6 +224,14 @@ def wait():
         main()
     else:
         main()
+"""
+        print(firi.trade.cancelOrder(market="BTCNOK"))
+        print(firi.trade.cancelOrder(market="ETHNOK"))
+        print(firi.trade.cancelOrder(market="LTCNOK"))
+        print(firi.trade.cancelOrder(market="XRPNOK"))
+        print(firi.trade.cancelOrder(market="ADANOK"))
+        print(firi.trade.cancelOrder(market="DAINOK"))
+"""
 
 if __name__ == "__main__":
     main()

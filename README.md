@@ -10,7 +10,7 @@ from the Firi trading API.
 
 2. Update config.py with required API keys
 
-3. Run FiriCLI.py to start the CLI
+3. Run FiriCLI.py with Python 3 to start the CLI
 
 *Firi account verified using BankID is required for access to private endpoints.*
 *Contact support at support@miraiex.com for questions regarding API*

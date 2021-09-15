@@ -37,3 +37,5 @@ class Account():
             self.report.error(content="Missing data type: orders, trades or transactions")
             pass
 
+    def balances(self):
+        return rp.Parse(url='/balances/', type='get', auth='true')

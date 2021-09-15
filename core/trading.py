@@ -49,3 +49,4 @@ class Trading:
             return rp.Parse(url='/orders/' + market + '/history', type='get', auth='true')
         else:
             return rp.Parse(url='/orders/history', type='get', auth='true')
+
